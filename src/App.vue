@@ -12,6 +12,11 @@
         </select>
       </div>
 
+      <div style="margin-bottom: 1rem">
+        <label for="fileName">File name:</label>
+        <input id="fileName" v-model="fileName" type="text" placeholder="Enter file name" style="width: 100%">
+      </div>
+
       <div v-if="!isImageType" style="margin-bottom: 1rem">
         <label for="fileContent">File content:</label>
         <textarea id="fileContent" v-model="content" rows="6" style="width: 100%"></textarea>
@@ -36,6 +41,7 @@ const fileTypes = [
 ]
 const selectedExtension = ref('TXT')
 const content = ref('')
+const fileName = ref('downloaded-file')
 
 // Define file type categories
 const imageTypes = ['JPG', 'JPEG', 'PNG', 'TIFF', 'HEIC']
@@ -47,6 +53,9 @@ const isImageType = computed(() => {
 })
 
 const downloadFile = () => {
+  // Use the user-provided file name or default to "downloaded-file" if empty
+  const outputFileName = fileName.value.trim() || 'downloaded-file'
+  
   if (isImageType.value) {
     // Generate a blank 120x120 image
     const canvas = document.createElement('canvas')
@@ -71,7 +80,7 @@ const downloadFile = () => {
           const url = window.URL.createObjectURL(blob)
           const link = document.createElement('a')
           link.href = url
-          link.download = `downloaded-file.${selectedExtension.value.toLowerCase()}`
+          link.download = `${outputFileName}.${selectedExtension.value.toLowerCase()}`
           link.click()
           window.URL.revokeObjectURL(url)
         }
@@ -93,7 +102,7 @@ const downloadFile = () => {
     const url = window.URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
-    link.download = `downloaded-file.${selectedExtension.value.toLowerCase()}`
+    link.download = `${outputFileName}.${selectedExtension.value.toLowerCase()}`
     link.click()
     window.URL.revokeObjectURL(url)
   } else if (selectedExtension.value.toUpperCase() === 'PDF') {
@@ -109,7 +118,7 @@ const downloadFile = () => {
     const url = window.URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
-    link.download = `downloaded-file.pdf`
+    link.download = `${outputFileName}.pdf`
     link.click()
     window.URL.revokeObjectURL(url)
   } else {
@@ -135,7 +144,7 @@ const downloadFile = () => {
     const url = window.URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
-    link.download = `downloaded-file.${selectedExtension.value.toLowerCase()}`
+    link.download = `${outputFileName}.${selectedExtension.value.toLowerCase()}`
     link.click()
     window.URL.revokeObjectURL(url)
   }
