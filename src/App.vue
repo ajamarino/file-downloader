@@ -1,8 +1,13 @@
 <template>
   <div id="app">
     <div class="content-container">
-      <h2>Create and Download File</h2>
-
+      <h1 style="text-align: center; margin-bottom: 1rem;">Create and Download File</h1>
+      
+      <div class="file-name-container">
+        <div style="margin-bottom: 1rem"class="file-type-select">
+        <label for="fileName">File name:</label>
+        <input id="fileName" v-model="fileName" type="text" placeholder="Enter file name" style="width: 100%">
+      </div>
       <div style="margin-bottom: 1rem" class="file-type-select">
         <label for="fileType">Select file type:</label>
         <select id="fileType" v-model="selectedExtension">
@@ -11,11 +16,9 @@
           </option>
         </select>
       </div>
-
-      <div style="margin-bottom: 1rem">
-        <label for="fileName">File name:</label>
-        <input id="fileName" v-model="fileName" type="text" placeholder="Enter file name" style="width: 100%">
       </div>
+      
+
 
       <div v-if="!isImageType" style="margin-bottom: 1rem">
         <label for="fileContent">File content:</label>
@@ -27,7 +30,10 @@
         <div class="image-preview"></div>
       </div>
 
-      <button class="download-button" @click="downloadFile">Download</button>
+      <div class="download-button-container">
+        
+        <button class="download-button" @click="downloadFile">Download</button>
+      </div>
     </div>
   </div>
 </template>
@@ -229,7 +235,21 @@ textarea {
 
 .file-type-select {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 0.5rem;
+}
+
+.file-name-container{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+
+}
+
+.download-button-container{
+  width: 100%;
+  display: flex;
+  justify-content: center
 }
 </style>
